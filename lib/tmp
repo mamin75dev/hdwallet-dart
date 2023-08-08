@@ -1,0 +1,59 @@
+// import 'package:elliptic/elliptic.dart';
+// import 'package:ecdsa/ecdsa.dart';
+import 'dart:convert';
+import 'package:elliptic/elliptic.dart';
+import 'package:pointycastle/export.dart';
+import 'package:pointycastle/pointycastle.dart';
+
+List<int> hexToBytes(String hex) {
+  return List<int>.generate(hex.length ~/ 2, (i) => int.parse(hex.substring(i * 2, i * 2 + 2), radix: 16));
+}
+
+ECPublicKey publicKeyFromPrivateKey(ECPrivateKey privateKey) {
+  ECPoint? Q = privateKey.parameters!.G * privateKey.d;
+  return ECPublicKey(Q, privateKey.parameters);
+}
+
+void main() {
+  String hexPrivateKey = "0b89c2567e8a341098771be8eb333ca55ea80349845b48151d0bcaecaaa5acce";
+
+  ECDomainParameters params = ECDomainParameters("secp256k1");
+
+  // Create a private key using the private key bytes
+
+  // AsymmetricKeyPair pair = AsymmetricKeyPair(publicKey, privateKey);
+
+  var privateKey = ECPrivateKey(BigInt.tryParse(hexPrivateKey, radix: 16), params);
+
+  var pubKey = publicKeyFromPrivateKey(privateKey);
+
+  print(privateKey.d?.toRadixString(16));
+  print(pubKey.Q?.x?.toBigInteger()?.toRadixString(16));
+  // var pubKey = ECPublicKey(BigInt.parse(hexPubKey), params);
+  // EcPriv
+
+  // Extract the corresponding public key from the private key
+  // ECPublicKey publicKey = ECPublicKey(Q, parameters);
+
+  // use elliptic curves
+  // var ec = getP256();
+  // var privateKey = PrivateKey.fromHex(ec, "0b89c2567e8a341098771be8eb333ca55ea80349845b48151d0bcaecaaa5acce");
+  // var hex = "";
+  // var pub = privateKey.publicKey;
+  // print('privateKey: 0x${privateKey.publicKey}');
+  // print('publicKey: 0x$pub');
+
+  // // use ecdh
+  // var privateAlice = ec.generatePrivateKey();
+  // var publicAlice = privateAlice.publicKey;
+  // var privateBob = ec.generatePrivateKey();
+  // var publicBob = privateAlice.publicKey;
+  // var secretAlice = computeSecretHex(privateAlice, publicBob);
+  // var secretBob = computeSecretHex(privateBob, publicAlice);
+  // print('secretAlice: 0x$secretAlice');
+  // print('secretBob: 0x$secretBob');
+}
+
+// "0x04b3aafff4353a762d1ac5c25ee4804e81b05a83199dff30b64fe0322eafa5df72157d6508f38d92c5bb962fc08a6ce96e8bab61f7c5c4689351ef86957201297c"
+
+// "04d2578f7be1b2d5b95bff7be7ad812f037125796c7d1dd61644f52d18be7b6fcbcbd9427cc963cc7cf01bf99089aee965230cf45e52b7dd6e65670f89377bccd2"
