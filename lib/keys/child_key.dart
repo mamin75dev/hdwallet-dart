@@ -2,7 +2,7 @@ import 'dart:typed_data';
 
 import 'package:pointycastle/impl.dart';
 import 'package:tsw/crypto/hmac_sha512.dart';
-import 'package:tsw/ecdsa/ecdsa_ketpair.dart';
+import 'package:tsw/ecdsa/ecdsa_keypair.dart';
 import 'package:tsw/extensions/ec_private_key_extensions.dart';
 import 'package:tsw/extensions/integer_extensions.dart';
 import 'package:tsw/extensions/integer_list_extension.dart';
